@@ -43,7 +43,6 @@ dfMortalidadeCID10.dropna(axis=1, how="all")
 
 # ****************** ANÁLISE DOS DADOS ***********************
 # Análise da Distribuição
-
 print("-=--=-=--=-= Qtde de linhas e colunas do Dataset Mortalidade por Unidade da Federeal por Grupo CID-10 -=-=--==")
 print(dfMortalidadeCID10.shape, "\n")
 
@@ -98,21 +97,37 @@ print(dfMortalidadeCID10FaltantesMediana.describe(), '\n')
 # ****************** VSUALIZAÇÃO ***********************
 
 plt.close('all')
-sns.set()
-print("-=-=--=-=--=-=-=-=-=- Gráfico da Mortalidade por Unidade da Federeal por Groupo CID-10 -=-=--=-=--=-=-=-=-=-")
+
+print("-=-=--=-=--=-=-=-=-=- Gráfico da Mortalidade da Bahia por Groupo CID-10 -=-=--=-=--=-=-=-=-=-")
 plt.figure(1)
 plt.subplot(111)
 plt.plot(dfMortalidadeCID10FaltantesMedia.index, dfMortalidadeCID10FaltantesMedia['BA'], "ro")
+plt.xlabel("Doenças por CID-10")
+plt.ylabel("Total de Mortes")
+plt.xticks(rotation=90)
 plt.title('Grupo CID-10')
+#plt.show()
 
+print("-=-=--=-=--=-=-=-=-=- Histograma da Mortalidade da Bahia por Groupo CID-10 -=-=--=-=--=-=-=-=-=-")
 plt.figure(2)
 plt.subplot(211)
-f, ax = plt.subplots()
-sns.heatmap(dfMortalidadeCID10FaltantesMedia)
+plt.xlabel("Doenças por CID-10")
+plt.ylabel("Total de Mortes")
+plt.xticks(rotation=90)
+plt.hist(dfMortalidadeCID10FaltantesMedia["BA"] )
+#plt.show()
 
-print("-=-=--=-=--=-=-=-=-=- Histograma da Mortalidade por Unidade da Federeal por Groupo CID-10 -=-=--=-=--=-=-=-=-=-")
+print("-=-=--=-=--=-=-=-=-=- Heatmaps da Mortalidade por Unidade da Federeal por Grupo CID-10 -=-=--=-=--=-=-=-=-=-")
+sns.set()
+plt.figure(3)
+plt.subplot(311)
+#columns = ["RO", "AC",	"AM", "RR", "PA", "AP", "TO", "MA", "PI", "CE", "RN", "PB",
+#                                            "PE", "AL", "SE", "BA", "MG", "ES", "RJ", "SP", "PR", "SC", "RS", "MS",
+#                                            "MT", "GO", "DF"]
 
+dfMortalidadeCID10FaltantesMedia.pivot_table(index="Grupo CID-10")
+sns.heatmap(dfMortalidadeCID10FaltantesMedia, annot=True, fmt="g", cmap="viridis", robust=True, vmin=1, vmax=1000000,
+            center=0, square=True, )
 plt.show()
 
-
-# ****************** VSUALIZAÇÃO ***********************
+# ****************** FIM VSUALIZAÇÃO ***********************
